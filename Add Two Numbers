@@ -1,0 +1,55 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // carry=0时代表不用进位，=1时代表要进位，初始值为0
+        int carry = 0;
+        // 把l1和l2这两个链表分别放入p和q中
+        ListNode p = l1;
+        ListNode q = l2;
+        // 这代表结果的链表，该链表第一个节点值为0
+        ListNode head = new ListNode(0);
+        // current表示我们当前计算到的节点
+        ListNode current = head;
+        // 当p，q两个链表的节点还有值的时候
+        while(p != null || q != null){
+            // 当p（第一个链表）的节点值不为空的时候，将节点值放入int x中
+            int x = (p != null) ? p.val : 0;
+             // 当p的节点值为空时，x的值就是0
+            
+            // q（第二个链表）也是同理
+            int y = (q != null) ? q.val : 0;
+            // sum代表x和y的和，但因为节点值只能是个位数，
+            // 如果x和y的和超出10，那么十位的1就会被赋予到
+            // carry上
+            int sum = x + y + carry;
+            // 下一个节点值，即我们进行第一次运算的节点值为sum%10
+            // 这样可以求出该节点值的个位数字
+            current.next = new ListNode(sum % 10);
+            // 用sum除以10，如果sum>0，则carry为1，否则为0
+            carry = sum / 10;
+            // 该节点运算完毕，移动到下一个节点
+            current = current.next;
+            // 同时如果p和q的节点值不为空，也移动到下个节点，
+            // 如果为空，就留在原地
+            p = (p != null) ? p.next : null;
+            q = (q != null) ? q.next : null;
+        }
+        // 如果最后一位的计算需要进位，current的最后一个节点需要为1
+        if (carry == 1){
+            current.next = new ListNode(1);
+        }
+        // 当p和q的最后一位可能为1的情况也计算完后，
+        // 我们最终已经确保了这两个链表的每一个节点都被计算了，
+        //  return head.next（因为head的第一个节点是0，我们不需要那个）
+        return head.next;            
+    }
+}
