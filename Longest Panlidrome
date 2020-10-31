@@ -1,0 +1,25 @@
+public class test {
+    public static String longestPalindrome(String s) {
+        int start = 0;
+        int longestLength = 0;
+        for (int i = 0; i < s.length(); i++){
+            int currentLength = Math.max(getLongestLength(s,i,i),getLongestLength(s,i,i+1));
+            if(currentLength > longestLength){
+                longestLength = currentLength;
+                start = i - ((currentLength - 1) / 2);
+            }
+        }
+        return s.substring(start, start + longestLength);
+    }
+    public static int getLongestLength(String s, int left, int right){
+        while((left >= 0) && (right < s.length()) && (s.charAt(left) == s.charAt(right))){
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+    public static void main(String[] args){
+        System.out.println(longestPalindrome("babade"));
+    }
+}
