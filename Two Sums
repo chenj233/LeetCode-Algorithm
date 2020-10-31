@@ -1,0 +1,18 @@
+Class Solution {
+	public int[] twoSum(int[] nums, int target){
+		// 创建一个HashMap
+		HashMap <Integer,Integer> map = new HashMap<>();
+		// 将nums[]中的integer依次放入map中
+		for(int i = 0; i < nums.length; i++){
+			map.put(nums[i],i);
+		}
+		for(int j = 0; j < nums.length; j++){
+			// 如果map中存在target-nums[i],且该值不在i的位置（确保该值不是nums[i]本身）立即return
+			if(map.containsKey(target-nums[j]) && map.get(target-nums[j]) != j){
+				return new int[]{j, map.get(target-nums[j])};
+			}
+		}
+		// exception
+		throw new IllegalArgumentException("No Solution");
+	}
+}
