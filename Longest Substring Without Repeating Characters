@@ -1,0 +1,32 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+    	//定义character set
+        HashSet<Character> set = new HashSet<>();
+        //代表set左边字符位置的left
+        int left = 0;
+        //代表遍历string，代表即将加入set的字符位置
+        int right = 0;
+        //最长的不重复substring的长度
+        int max = 0;
+        //当遍历string的过程中
+        while (right < s.length()){
+        	// 如果set中不包含string在right位置的字符
+            if(!set.contains(s.charAt(right))){
+            	// 则将该字符加入set
+                set.add(s.charAt(right));
+                // 移动到下一个字符位置
+                right++;
+                // 取当前max和set的size的最大值放入max作为当前答案
+                max = Math.max(max,set.size());
+            } else {
+            	// 否则代表set中已经存在该字符，重复
+            	// 将set中重复的字符删去
+                set.remove(s.charAt(left));
+                // 移到下一个可能删除的字符
+                left++；
+            }
+        }
+        // 返回答案
+        return max;
+    }
+}
