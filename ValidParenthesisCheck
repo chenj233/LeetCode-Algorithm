@@ -1,0 +1,25 @@
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        left_list, star_list = [], []
+        for cnt in range(len(s)):
+            if s[cnt] == '(':
+                left_list.append(cnt)
+            elif s[cnt] == '*':
+                star_list.append(cnt)
+            elif s[cnt] == ')':
+                if left_list:
+                    left_list.pop()
+                elif star_list:
+                    star_list.pop()
+                else:
+                    return False
+        # first condition complete(right parenthesis)
+        # second condition is for left parenthesis
+        # * occur
+        while left_list:
+            if not star_list:
+                return False
+            elif left_list[-1] > star_list[-1]:
+                return False
+        return True
+                
